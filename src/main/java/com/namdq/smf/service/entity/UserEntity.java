@@ -28,5 +28,5 @@ public class UserEntity extends AuditEntity {
 
     private String lastName;
 
-    private boolean active;
+    private Boolean active;
 }

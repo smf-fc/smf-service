@@ -19,5 +19,5 @@ public class UserDto extends AuditDto {
 
     private String lastName;
 
-    private boolean active;
+    private Boolean active;
 }
