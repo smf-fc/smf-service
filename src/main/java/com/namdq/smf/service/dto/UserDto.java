@@ -3,8 +3,8 @@ package com.namdq.smf.service.dto;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-@EqualsAndHashCode(callSuper = true)
 @Data
+@EqualsAndHashCode(callSuper = true)
 public class UserDto extends AuditDto {
 
     private long id;
@@ -19,5 +19,5 @@ public class UserDto extends AuditDto {
 
     private String lastName;
 
-    private Boolean active;
+    private boolean active;
 }

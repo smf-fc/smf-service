@@ -25,9 +25,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto create(UserDto userDto) {
-        UserEntity userEntity = UserMapper.INSTANCE.userDtoToUserEntity(userDto);
+        UserEntity userEntity = UserMapper.INSTANCE.mapToUserEntity(userDto);
         userEntity = this.userRepository.save(userEntity);
-        return UserMapper.INSTANCE.userEntityToUserDto(userEntity);
+        return UserMapper.INSTANCE.mapToUserDto(userEntity);
     }
 
     @Override
@@ -36,13 +36,13 @@ public class UserServiceImpl implements UserService {
         if (!userEntity.isPresent()) {
             throw new EntityNotFoundException("User not found.");
         }
-        return UserMapper.INSTANCE.userEntityToUserDto(userEntity.get());
+        return UserMapper.INSTANCE.mapToUserDto(userEntity.get());
     }
 
     @Override
     public Page<UserDto> get(Pageable pageable) {
         Page<UserEntity> userEntities = this.userRepository.findAll(pageable);
-        return userEntities.map(UserMapper.INSTANCE::userEntityToUserDto);
+        return userEntities.map(UserMapper.INSTANCE::mapToUserDto);
     }
 
     @Override
@@ -50,10 +50,10 @@ public class UserServiceImpl implements UserService {
         if (!this.userRepository.existsById(id)) {
             throw new EntityNotFoundException("User not found.");
         }
-        UserEntity userEntity = UserMapper.INSTANCE.userDtoToUserEntity(userDto);
+        UserEntity userEntity = UserMapper.INSTANCE.mapToUserEntity(userDto);
         userEntity.setId(id);
         userEntity = this.userRepository.save(userEntity);
-        return UserMapper.INSTANCE.userEntityToUserDto(userEntity);
+        return UserMapper.INSTANCE.mapToUserDto(userEntity);
     }
 
     @Override

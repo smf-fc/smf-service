@@ -7,9 +7,10 @@ import org.mapstruct.factory.Mappers;
 
 @Mapper
 public interface UserMapper {
+
     UserMapper INSTANCE = Mappers.getMapper(UserMapper.class);
 
-    UserDto userEntityToUserDto(UserEntity userEntity);
+    UserDto mapToUserDto(UserEntity userEntity);
 
-    UserEntity userDtoToUserEntity(UserDto userDto);
+    UserEntity mapToUserEntity(UserDto userDto);
 }
