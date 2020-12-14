@@ -1,12 +1,11 @@
 package com.namdq.smf.service.dto;
 
-import com.namdq.smf.service.entity.AuditEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class PitchDto extends AuditEntity {
+public class PitchDto extends AuditDto {
 
     private long id;
 

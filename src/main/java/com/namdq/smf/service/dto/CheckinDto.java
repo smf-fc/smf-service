@@ -1,7 +1,5 @@
 package com.namdq.smf.service.dto;
 
-import com.namdq.smf.service.entity.MatchEntity;
-import com.namdq.smf.service.entity.PlayerEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -11,9 +9,9 @@ public class CheckinDto extends AuditDto {
 
     private long id;
 
-    private PlayerEntity player;
+    private PlayerDto player;
 
-    private MatchEntity match;
+    private MatchDto match;
 
     private boolean wasJoin;
 }
