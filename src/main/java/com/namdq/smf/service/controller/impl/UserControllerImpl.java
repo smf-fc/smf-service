@@ -8,8 +8,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.validation.Valid;
-
 @RestController
 public class UserControllerImpl implements UserController {
 
@@ -26,22 +24,22 @@ public class UserControllerImpl implements UserController {
     }
 
     @Override
-    public UserDto create(@Valid UserDto userDto) {
+    public UserDto create(UserDto userDto) {
         return this.userService.create(userDto);
     }
 
     @Override
-    public UserDto get(long userId) {
-        return this.userService.get(userId);
+    public UserDto get(long id) {
+        return this.userService.get(id);
     }
 
     @Override
-    public UserDto update(long userId, @Valid UserDto userDto) {
-        return this.userService.update(userId, userDto);
+    public UserDto update(long id, UserDto userDto) {
+        return this.userService.update(id, userDto);
     }
 
     @Override
-    public void delete(long userId) {
-        this.userService.delete(userId);
+    public void delete(long id) {
+        this.userService.delete(id);
     }
 }
