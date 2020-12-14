@@ -3,6 +3,8 @@ package com.namdq.smf.service.dto;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import javax.validation.constraints.Email;
+
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class UserDto extends AuditDto {
@@ -11,6 +13,7 @@ public class UserDto extends AuditDto {
 
     private String username;
 
+    @Email
     private String email;
 
     private String password;
