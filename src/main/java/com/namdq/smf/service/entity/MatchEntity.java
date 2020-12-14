@@ -22,9 +22,10 @@ public class MatchEntity extends AuditEntity {
 
     private LocalTime time;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "pitch_id")
     private PitchEntity pitch;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "match")
+    @OneToMany(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY, mappedBy = "match")
     private List<CheckinEntity> checkins;
 }

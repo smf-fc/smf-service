@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
+import java.util.List;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
@@ -20,4 +21,7 @@ public class PitchEntity extends AuditEntity {
     private String address;
 
     private String phoneNumber;
+
+    @OneToMany(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY, mappedBy = "pitch")
+    private List<MatchEntity> matches;
 }

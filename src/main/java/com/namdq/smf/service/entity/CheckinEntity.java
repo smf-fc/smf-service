@@ -2,7 +2,6 @@ package com.namdq.smf.service.entity;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import org.springframework.context.annotation.EnableMBeanExport;
 
 import javax.persistence.*;
 

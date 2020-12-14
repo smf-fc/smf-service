@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -16,6 +17,7 @@ public class UserEntity extends AuditEntity {
 
     private String username;
 
+    @Email
     private String email;
 
     private String password;
@@ -26,6 +28,6 @@ public class UserEntity extends AuditEntity {
 
     private boolean active;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user")
+    @OneToOne(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY, mappedBy = "user")
     private PlayerEntity player;
 }
