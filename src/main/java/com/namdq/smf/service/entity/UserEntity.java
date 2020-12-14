@@ -25,4 +25,7 @@ public class UserEntity extends AuditEntity {
     private String lastName;
 
     private boolean active;
+
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user")
+    private PlayerEntity player;
 }
