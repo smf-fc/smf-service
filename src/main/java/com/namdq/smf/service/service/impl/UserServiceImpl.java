@@ -2,7 +2,7 @@ package com.namdq.smf.service.service.impl;
 
 import com.namdq.smf.service.dto.UserDto;
 import com.namdq.smf.service.entity.UserEntity;
-import com.namdq.smf.service.mapper.UserMapper;
+import com.namdq.smf.service.mapper.ModelMapper;
 import com.namdq.smf.service.repository.UserRepository;
 import com.namdq.smf.service.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,9 +25,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto create(UserDto userDto) {
-        UserEntity userEntity = UserMapper.INSTANCE.mapToUserEntity(userDto);
+        UserEntity userEntity = ModelMapper.getInstance().mapToEntity(userDto);
         userEntity = this.userRepository.save(userEntity);
-        return UserMapper.INSTANCE.mapToUserDto(userEntity);
+        return ModelMapper.getInstance().mapToDto(userEntity);
     }
 
     @Override
@@ -36,13 +36,13 @@ public class UserServiceImpl implements UserService {
         if (!userEntity.isPresent()) {
             throw new EntityNotFoundException("User not found.");
         }
-        return UserMapper.INSTANCE.mapToUserDto(userEntity.get());
+        return ModelMapper.getInstance().mapToDto(userEntity.get());
     }
 
     @Override
     public Page<UserDto> get(Pageable pageable) {
         Page<UserEntity> userEntities = this.userRepository.findAll(pageable);
-        return userEntities.map(UserMapper.INSTANCE::mapToUserDto);
+        return userEntities.map(ModelMapper.getInstance()::mapToDto);
     }
 
     @Override
@@ -50,10 +50,10 @@ public class UserServiceImpl implements UserService {
         if (!this.userRepository.existsById(id)) {
             throw new EntityNotFoundException("User not found.");
         }
-        UserEntity userEntity = UserMapper.INSTANCE.mapToUserEntity(userDto);
+        UserEntity userEntity = ModelMapper.getInstance().mapToEntity(userDto);
         userEntity.setId(id);
         userEntity = this.userRepository.save(userEntity);
-        return UserMapper.INSTANCE.mapToUserDto(userEntity);
+        return ModelMapper.getInstance().mapToDto(userEntity);
     }
 
     @Override
