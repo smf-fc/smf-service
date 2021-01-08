@@ -10,8 +10,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityExistsException;
 import javax.persistence.EntityNotFoundException;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class CheckinServiceImpl implements CheckinService {
@@ -26,6 +29,10 @@ public class CheckinServiceImpl implements CheckinService {
     @Override
     public CheckinDto create(CheckinDto checkinDto) {
         CheckinEntity checkinEntity = ModelMapper.getInstance().mapToEntity(checkinDto);
+        Optional<CheckinEntity> entityOptional = findFirstByMatchIdAndPlayerId(checkinEntity);
+        if (entityOptional.isPresent()) {
+            checkinEntity.setId(entityOptional.get().getId());
+        }
         checkinEntity = this.checkinRepository.save(checkinEntity);
         return ModelMapper.getInstance().mapToDto(checkinEntity);
     }
@@ -51,6 +58,14 @@ public class CheckinServiceImpl implements CheckinService {
             throw new EntityNotFoundException("Checkin not found.");
         }
         CheckinEntity checkinEntity = ModelMapper.getInstance().mapToEntity(checkinDto);
+
+        Optional<CheckinEntity> entityOptional = findFirstByMatchIdAndPlayerId(checkinEntity);
+        entityOptional.ifPresent(entity -> {
+            if (id != entity.getId()) {
+                throw new EntityExistsException("Checkin exists.");
+            }
+        });
+
         checkinEntity.setId(id);
         checkinEntity = this.checkinRepository.save(checkinEntity);
         return ModelMapper.getInstance().mapToDto(checkinEntity);
@@ -59,5 +74,17 @@ public class CheckinServiceImpl implements CheckinService {
     @Override
     public void delete(long id) {
         this.checkinRepository.deleteById(id);
+    }
+
+    @Override
+    public List<CheckinDto> findAllCheckinDtoByMatchId(int id) {
+        List<CheckinEntity> checkinEntities = this.checkinRepository.findAllByMatchId(id);
+        return checkinEntities.stream().map(ModelMapper.getInstance()::mapToDto).collect(Collectors.toList());
+    }
+
+    private Optional<CheckinEntity> findFirstByMatchIdAndPlayerId(CheckinEntity checkinEntity) {
+        long matchId = checkinEntity.getMatch().getId();
+        long playerId = checkinEntity.getPlayer().getId();
+        return this.checkinRepository.findFirstByMatchIdAndPlayerId(matchId, playerId);
     }
 }

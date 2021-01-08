@@ -6,11 +6,14 @@ import com.namdq.smf.service.service.CheckinService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "*")
 public class CheckinControllerImpl implements CheckinController {
 
     private final CheckinService checkinService;
@@ -43,5 +46,10 @@ public class CheckinControllerImpl implements CheckinController {
     @Override
     public void delete(long id) {
         this.checkinService.delete(id);
+    }
+
+    @Override
+    public List<CheckinDto> findAllCheckinDtoByMatchId(int matchId) {
+        return this.checkinService.findAllCheckinDtoByMatchId(matchId);
     }
 }
