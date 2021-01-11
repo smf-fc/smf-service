@@ -1,5 +1,6 @@
 package com.namdq.smf.service.service.impl;
 
+import com.namdq.smf.service.contanst.MatchStatus;
 import com.namdq.smf.service.dto.MatchDto;
 import com.namdq.smf.service.entity.MatchEntity;
 import com.namdq.smf.service.mapper.ModelMapper;
@@ -26,6 +27,7 @@ public class MatchServiceImpl implements MatchService {
     @Override
     public MatchDto create(MatchDto matchDto) {
         MatchEntity matchEntity = ModelMapper.getInstance().mapToEntity(matchDto);
+        matchEntity.setStatus(MatchStatus.OPEN_CHECK_IN);
         matchEntity = this.matchRepository.save(matchEntity);
         return ModelMapper.getInstance().mapToDto(matchEntity);
     }
